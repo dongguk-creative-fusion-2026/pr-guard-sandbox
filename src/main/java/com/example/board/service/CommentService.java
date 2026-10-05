@@ -49,6 +49,13 @@ public class CommentService {
         comments.delete(comment);
     }
 
+    /** 게시글의 댓글을 한 번에 지운다. */
+    @Transactional
+    public void deleteAllOfPost(Long postId) {
+        postService.getPost(postId);
+        comments.deleteByPostId(postId);
+    }
+
     private Comment find(Long commentId) {
         return comments.findById(commentId)
                 .orElseThrow(() -> new NotFoundException("댓글이 없습니다: " + commentId));
