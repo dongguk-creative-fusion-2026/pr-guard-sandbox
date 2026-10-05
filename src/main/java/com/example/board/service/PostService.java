@@ -20,8 +20,8 @@ public class PostService {
     }
 
     @Transactional
-    public Post create(User author, String title, String content) {
-        return posts.save(new Post(author, title, content));
+    public Post create(User author, String title, String content, String category) {
+        return posts.save(new Post(author, title, content, category == null ? "GENERAL" : category));
     }
 
     @Transactional(readOnly = true)

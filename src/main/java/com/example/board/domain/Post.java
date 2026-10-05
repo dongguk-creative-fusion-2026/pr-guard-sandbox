@@ -38,13 +38,21 @@ public class Post {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(nullable = false, length = 30)
+    private String category;
+
     protected Post() {
     }
 
     public Post(User author, String title, String content) {
+        this(author, title, content, "GENERAL");
+    }
+
+    public Post(User author, String title, String content, String category) {
         this.author = author;
         this.title = title;
         this.content = content;
+        this.category = category;
         this.createdAt = LocalDateTime.now();
     }
 
@@ -84,5 +92,9 @@ public class Post {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public String getCategory() {
+        return category;
     }
 }
