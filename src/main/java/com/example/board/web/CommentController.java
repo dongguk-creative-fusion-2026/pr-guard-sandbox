@@ -52,6 +52,13 @@ public class CommentController {
         commentService.delete(id, currentUser.get());
     }
 
+    @DeleteMapping("/api/posts/{postId}/comments")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("isAuthenticated()")
+    public void deleteAll(@PathVariable Long postId) {
+        commentService.deleteAllOfPost(postId);
+    }
+
     public record CommentRequest(@NotBlank String content) {
     }
 }
