@@ -32,9 +32,6 @@ public class Post {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "view_count", nullable = false)
-    private long viewCount;
-
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
@@ -76,10 +73,6 @@ public class Post {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public long getViewCount() {
-        return viewCount;
     }
 
     public LocalDateTime getUpdatedAt() {
