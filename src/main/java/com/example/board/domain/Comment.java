@@ -33,6 +33,9 @@ public class Comment {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    @Column(nullable = false)
+    private boolean edited;
+
     protected Comment() {
     }
 
@@ -41,6 +44,15 @@ public class Comment {
         this.author = author;
         this.content = content;
         this.createdAt = LocalDateTime.now();
+    }
+
+    public void edit(String content) {
+        this.content = content;
+        this.edited = true;
+    }
+
+    public boolean isEdited() {
+        return edited;
     }
 
     public boolean isWrittenBy(User user) {

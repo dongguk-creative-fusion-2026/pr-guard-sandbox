@@ -35,10 +35,22 @@ public class CommentService {
     }
 
     @Transactional
+    public Comment edit(Long commentId, User user, String content) {
+        Comment comment = find(commentId);
+        guard.requireOwner(comment, user);
+        comment.edit(content);
+        return comment;
+    }
+
+    @Transactional
     public void delete(Long commentId, User user) {
-        Comment comment = comments.findById(commentId)
-                .orElseThrow(() -> new NotFoundException("댓글이 없습니다: " + commentId));
+        Comment comment = find(commentId);
         guard.requireOwner(comment, user);
         comments.delete(comment);
+    }
+
+    private Comment find(Long commentId) {
+        return comments.findById(commentId)
+                .orElseThrow(() -> new NotFoundException("댓글이 없습니다: " + commentId));
     }
 }

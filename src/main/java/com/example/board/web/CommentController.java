@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,6 +37,12 @@ public class CommentController {
     @PreAuthorize("isAuthenticated()")
     public CommentResponse add(@PathVariable Long postId, @Valid @RequestBody CommentRequest request) {
         return CommentResponse.from(commentService.add(postId, currentUser.get(), request.content()));
+    }
+
+    @PutMapping("/api/comments/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public CommentResponse edit(@PathVariable Long id, @Valid @RequestBody CommentRequest request) {
+        return CommentResponse.from(commentService.edit(id, currentUser.get(), request.content()));
     }
 
     @DeleteMapping("/api/comments/{id}")
