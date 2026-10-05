@@ -29,7 +29,7 @@ public class PostController {
 
     @GetMapping("/{id}")
     public PostResponse get(@PathVariable Long id) {
-        return PostResponse.from(postService.getPost(id));
+        return PostResponse.from(postService.viewPost(id));
     }
 
     @PostMapping
