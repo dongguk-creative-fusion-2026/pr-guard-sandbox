@@ -36,7 +36,8 @@ public class PostController {
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("isAuthenticated()")
     public PostResponse create(@Valid @RequestBody PostRequest request) {
-        return PostResponse.from(postService.create(currentUser.get(), request.title(), request.content()));
+        return PostResponse.from(postService.create(currentUser.get(), request.title(), request.content(),
+                request.category()));
     }
 
     @PutMapping("/{id}")
