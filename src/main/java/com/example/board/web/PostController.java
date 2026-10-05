@@ -3,6 +3,7 @@ package com.example.board.web;
 import com.example.board.security.CurrentUser;
 import com.example.board.service.PostService;
 import jakarta.validation.Valid;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,6 +27,15 @@ public class PostController {
     public PostController(PostService postService, CurrentUser currentUser) {
         this.postService = postService;
         this.currentUser = currentUser;
+    }
+
+    private static final int MAX_PAGE_SIZE = 50;
+
+    @GetMapping
+    public List<PostResponse> list(@RequestParam(defaultValue = "0") int page,
+                                   @RequestParam(defaultValue = "20") int size) {
+        int safeSize = Math.min(Math.max(size, 1), MAX_PAGE_SIZE);
+        return postService.list(Math.max(page, 0), safeSize).map(PostResponse::from).getContent();
     }
 
     @GetMapping("/{id}")
