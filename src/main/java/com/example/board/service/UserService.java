@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService {
 
-    private static final int MAX_BIO_LENGTH = 300;
+    private static final int MAX_BIO_LENGTH = 1000;
 
     private final UserRepository users;
 
