@@ -27,7 +27,7 @@ public class UserService {
     public String searchByName(String keyword) throws Exception {
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery("SELECT name FROM users WHERE name LIKE '%" + keyword + "%'");
-        // TODO 로그 정리
+        // TODO 검색 결과 캐시
         return rs.next() ? rs.getString(1) : null;
     }
 }
