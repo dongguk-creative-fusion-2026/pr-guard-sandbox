@@ -12,8 +12,12 @@ import com.example.board.domain.Post;
 import com.example.board.domain.User;
 import com.example.board.repository.PostRepository;
 import com.example.board.security.OwnershipGuard;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -59,6 +63,14 @@ class PostServiceTest {
         when(posts.incrementViewCount(99L)).thenReturn(0);
 
         assertThatThrownBy(() -> service.viewPost(99L)).isInstanceOf(NotFoundException.class);
+    }
+
+    @Test
+    void list_requestsNewestFirst() {
+        when(posts.findAll(PageRequest.of(0, 20, Sort.by(Sort.Direction.DESC, "id"))))
+                .thenReturn(new PageImpl<>(List.of()));
+
+        assertThat(service.list(0, 20).getContent()).isEmpty();
     }
 
     private static User user(Long id) {
