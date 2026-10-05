@@ -31,6 +31,7 @@ public class CommentService {
     @Transactional
     public Comment add(Long postId, User author, String content) {
         Post post = postService.getPost(postId);
+        post.increaseCommentCount();
         return comments.save(new Comment(post, author, content));
     }
 
