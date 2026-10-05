@@ -35,6 +35,9 @@ public class Post {
     @Column(name = "view_count", nullable = false)
     private long viewCount;
 
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
     protected Post() {
     }
 
@@ -48,6 +51,7 @@ public class Post {
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
+        this.updatedAt = LocalDateTime.now();
     }
 
     public boolean isWrittenBy(User user) {
@@ -76,5 +80,9 @@ public class Post {
 
     public long getViewCount() {
         return viewCount;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 }
