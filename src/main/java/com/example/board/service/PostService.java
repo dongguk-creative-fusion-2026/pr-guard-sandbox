@@ -13,15 +13,19 @@ public class PostService {
 
     private final PostRepository posts;
     private final OwnershipGuard guard;
+    private final NewPostNotifier notifier;
 
-    public PostService(PostRepository posts, OwnershipGuard guard) {
+    public PostService(PostRepository posts, OwnershipGuard guard, NewPostNotifier notifier) {
         this.posts = posts;
         this.guard = guard;
+        this.notifier = notifier;
     }
 
     @Transactional
     public Post create(User author, String title, String content) {
-        return posts.save(new Post(author, title, content));
+        Post post = posts.save(new Post(author, title, content));
+        notifier.notifyCreated(post);
+        return post;
     }
 
     @Transactional(readOnly = true)
