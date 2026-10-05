@@ -24,6 +24,9 @@ public class User {
     @Column(nullable = false)
     private String role;
 
+    @Column(length = 300)
+    private String bio;
+
     protected User() {
     }
 
@@ -47,5 +50,13 @@ public class User {
 
     public String getRole() {
         return role;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void changeBio(String bio) {
+        this.bio = bio;
     }
 }
