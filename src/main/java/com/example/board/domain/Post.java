@@ -38,6 +38,9 @@ public class Post {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(name = "comment_count", nullable = false)
+    private int commentCount;
+
     protected Post() {
     }
 
@@ -52,6 +55,20 @@ public class Post {
         this.title = title;
         this.content = content;
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public void increaseCommentCount() {
+        this.commentCount++;
+    }
+
+    public void decreaseCommentCount() {
+        if (commentCount > 0) {
+            this.commentCount--;
+        }
+    }
+
+    public int getCommentCount() {
+        return commentCount;
     }
 
     public boolean isWrittenBy(User user) {
