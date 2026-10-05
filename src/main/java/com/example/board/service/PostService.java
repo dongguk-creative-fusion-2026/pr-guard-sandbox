@@ -26,8 +26,7 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public Post getPost(Long id) {
-        return posts.findById(id)
-                .orElseThrow(() -> new NotFoundException("게시글이 없습니다: " + id));
+        return posts.findById(id).orElse(null);
     }
 
     /** 상세 조회. 조회수를 함께 올린다. */
