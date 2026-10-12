@@ -30,7 +30,8 @@ public class CommentService {
 
     @Transactional
     public Comment add(Long postId, User author, String content) {
-        Post post = postService.getPost(postId);
+        // 댓글 저장에는 post_id 만 필요하므로 게시글을 읽지 않는다
+        Post post = postService.getReference(postId);
         return comments.save(new Comment(post, author, content));
     }
 

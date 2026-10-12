@@ -30,6 +30,11 @@ public class PostService {
                 .orElseThrow(() -> new NotFoundException("게시글이 없습니다: " + id));
     }
 
+    /** 연관관계만 걸 때 쓴다. SELECT 없이 프록시만 돌려준다. */
+    public Post getReference(Long id) {
+        return posts.getReferenceById(id);
+    }
+
     /** 상세 조회. 조회수를 함께 올린다. */
     @Transactional
     public Post viewPost(Long id) {
