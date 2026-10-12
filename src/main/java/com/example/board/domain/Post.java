@@ -54,6 +54,10 @@ public class Post {
         this.updatedAt = LocalDateTime.now();
     }
 
+    public void increaseViewCount() {
+        this.viewCount++;
+    }
+
     public boolean isWrittenBy(User user) {
         return author.getId().equals(user.getId());
     }

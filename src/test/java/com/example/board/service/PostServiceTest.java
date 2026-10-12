@@ -56,7 +56,7 @@ class PostServiceTest {
 
     @Test
     void viewPost_missingPost_throwsNotFound() {
-        when(posts.incrementViewCount(99L)).thenReturn(0);
+        when(posts.findById(99L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> service.viewPost(99L)).isInstanceOf(NotFoundException.class);
     }
