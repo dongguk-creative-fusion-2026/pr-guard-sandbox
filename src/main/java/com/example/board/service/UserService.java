@@ -18,11 +18,12 @@ public class UserService {
 
     @Transactional
     public User updateBio(User user, String bio) {
-        if (bio != null && bio.length() > MAX_BIO_LENGTH) {
+        bio = bio.strip();
+        if (bio.length() > MAX_BIO_LENGTH) {
             throw new IllegalArgumentException("소개는 " + MAX_BIO_LENGTH + "자 이하여야 합니다");
         }
         User managed = users.getReferenceById(user.getId());
-        managed.changeBio(bio);
+        managed.changeBio(bio.isEmpty() ? null : bio);
         return managed;
     }
 }
