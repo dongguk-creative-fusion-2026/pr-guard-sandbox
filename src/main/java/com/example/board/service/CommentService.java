@@ -25,7 +25,7 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public List<Comment> list(Long postId) {
-        return comments.findByPostIdOrderByIdAsc(postId);
+        return comments.findWithAuthorByPostId(postId);
     }
 
     @Transactional
