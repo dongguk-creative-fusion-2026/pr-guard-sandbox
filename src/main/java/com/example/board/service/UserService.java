@@ -1,5 +1,6 @@
 package com.example.board.service;
 
+import com.example.board.common.NotFoundException;
 import com.example.board.domain.User;
 import com.example.board.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,12 @@ public class UserService {
 
     public UserService(UserRepository users) {
         this.users = users;
+    }
+
+    @Transactional(readOnly = true)
+    public User getUser(Long id) {
+        return users.findById(id)
+                .orElseThrow(() -> new NotFoundException("사용자가 없습니다: " + id));
     }
 
     @Transactional
