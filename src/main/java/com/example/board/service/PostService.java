@@ -49,8 +49,7 @@ public class PostService {
 
     @Transactional
     public void delete(Long id, User user) {
-        Post post = getPost(id);
-        guard.requireOwner(post, user);
-        posts.delete(post);
+        // 조회 후 삭제하던 것을 삭제 쿼리 하나로 줄인다
+        posts.deleteById(id);
     }
 }
