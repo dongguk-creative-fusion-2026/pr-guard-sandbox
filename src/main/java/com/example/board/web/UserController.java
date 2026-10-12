@@ -3,9 +3,12 @@ package com.example.board.web;
 import com.example.board.domain.User;
 import com.example.board.security.CurrentUser;
 import com.example.board.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,6 +27,13 @@ public class UserController {
     public BioResponse updateBio(@RequestBody BioRequest request) {
         User user = userService.updateBio(currentUser.get(), request.bio());
         return new BioResponse(user.getNickname(), user.getBio());
+    }
+
+    @DeleteMapping("/api/users/me")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("isAuthenticated()")
+    public void withdraw() {
+        userService.withdraw(currentUser.get());
     }
 
     public record BioRequest(String bio) {

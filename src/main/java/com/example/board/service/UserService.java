@@ -25,4 +25,9 @@ public class UserService {
         managed.changeBio(bio);
         return managed;
     }
+
+    @Transactional
+    public void withdraw(User user) {
+        users.getReferenceById(user.getId()).withdraw();
+    }
 }
