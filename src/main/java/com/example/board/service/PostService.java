@@ -33,10 +33,9 @@ public class PostService {
     /** 상세 조회. 조회수를 함께 올린다. */
     @Transactional
     public Post viewPost(Long id) {
-        if (posts.incrementViewCount(id) == 0) {
-            throw new NotFoundException("게시글이 없습니다: " + id);
-        }
-        return getPost(id);
+        Post post = getPost(id);
+        post.increaseViewCount();
+        return post;
     }
 
     @Transactional
