@@ -2,7 +2,9 @@ package com.example.board.web;
 
 import com.example.board.security.CurrentUser;
 import com.example.board.service.PostService;
+import com.example.board.repository.PostSearchRepository;
 import jakarta.validation.Valid;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,10 +24,17 @@ public class PostController {
 
     private final PostService postService;
     private final CurrentUser currentUser;
+    private final PostSearchRepository search;
 
-    public PostController(PostService postService, CurrentUser currentUser) {
+    public PostController(PostService postService, CurrentUser currentUser, PostSearchRepository search) {
         this.postService = postService;
         this.currentUser = currentUser;
+        this.search = search;
+    }
+
+    @GetMapping("/search")
+    public List<PostResponse> search(@RequestParam String q, @RequestParam(defaultValue = "latest") String sort) {
+        return search.search(q, sort).stream().map(PostResponse::from).toList();
     }
 
     @GetMapping("/{id}")
