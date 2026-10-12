@@ -51,6 +51,6 @@ public class CommentService {
 
     private Comment find(Long commentId) {
         return comments.findById(commentId)
-                .orElseThrow(() -> new NotFoundException("댓글이 없습니다: " + commentId));
+                .orElseThrow(() -> NotFoundException.of("댓글", commentId));
     }
 }
