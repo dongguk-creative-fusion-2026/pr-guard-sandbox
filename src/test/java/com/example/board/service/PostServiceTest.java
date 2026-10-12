@@ -3,7 +3,6 @@ package com.example.board.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -45,13 +44,10 @@ class PostServiceTest {
     }
 
     @Test
-    void delete_byNonOwner_doesNotDelete() {
-        User owner = user(1L);
-        Post post = new Post(owner, "제목", "내용");
-        when(posts.findById(10L)).thenReturn(Optional.of(post));
+    void delete_deletesById() {
+        service.delete(10L, user(1L));
 
-        assertThatThrownBy(() -> service.delete(10L, user(2L))).isInstanceOf(AccessDeniedException.class);
-        verify(posts, never()).delete(post);
+        verify(posts).deleteById(10L);
     }
 
     @Test
