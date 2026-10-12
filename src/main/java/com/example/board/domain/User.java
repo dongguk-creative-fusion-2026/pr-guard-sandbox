@@ -27,6 +27,9 @@ public class User {
     @Column(length = 300)
     private String bio;
 
+    @Column(nullable = false)
+    private boolean deleted;
+
     protected User() {
     }
 
@@ -58,5 +61,16 @@ public class User {
 
     public void changeBio(String bio) {
         this.bio = bio;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    /** 탈퇴. 작성한 글·댓글은 남기고 개인정보만 지운다. */
+    public void withdraw() {
+        this.deleted = true;
+        this.nickname = "탈퇴한 회원";
+        this.bio = null;
     }
 }
