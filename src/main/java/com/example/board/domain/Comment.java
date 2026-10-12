@@ -36,6 +36,9 @@ public class Comment {
     @Column(nullable = false)
     private boolean edited;
 
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
     protected Comment() {
     }
 
@@ -49,6 +52,7 @@ public class Comment {
     public void edit(String content) {
         this.content = content;
         this.edited = true;
+        this.updatedAt = LocalDateTime.now();
     }
 
     public boolean isEdited() {
@@ -77,5 +81,9 @@ public class Comment {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 }
