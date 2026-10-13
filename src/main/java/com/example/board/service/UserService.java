@@ -25,4 +25,9 @@ public class UserService {
         managed.changeBio(bio);
         return managed;
     }
+
+    @Transactional
+    public void deleteUser(Long id) {
+        users.deleteById(id);
+    }
 }
